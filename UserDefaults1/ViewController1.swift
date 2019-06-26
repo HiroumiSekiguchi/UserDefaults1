@@ -24,6 +24,39 @@ class ViewController1: UITableViewController {
     }
     
     
+    // ☆☆☆追加ボタン（アラートシステム）☆☆☆ //
+    
+    @IBAction func addButton(_ sender: UIBarButtonItem) {
+        
+        // アラートシステムの宣言
+        let alert = UIAlertController(title: "新規項目の追加", message: "", preferredStyle: .alert)
+        
+        // スコープを共通化して流用するためのTextField
+        var textField = UITextField()
+        
+        // アラートにTextFieldを追加
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "新規項目を追加してください"
+            textField = alertTextField
+        }
+        
+        // アラートシステムの中で青文字でボタンとして押せる部分の設定
+        let action = UIAlertAction(title: "追加", style: .default) { (action) in
+            // 「追加」ボタンを押した時の処理
+            self.itemArray.append(textField.text!)
+            
+            // TableViewのリロード
+            self.tableView.reloadData()
+        }
+        
+        // アラートにボタン（Action）を追加
+        alert.addAction(action)
+        
+        // 表示
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
     
     // ☆☆☆以下、TableViewについての設定☆☆☆ //
     

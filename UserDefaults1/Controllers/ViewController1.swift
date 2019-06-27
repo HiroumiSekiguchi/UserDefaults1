@@ -12,7 +12,7 @@ class ViewController1: UITableViewController {
     
     
     // セルに表示する項目を格納
-    var itemArray = ["本を読む", "映画見る", "夕飯を買う"]
+    var itemArray = [Item]()
     
     // UserDefaultsの初期化
     let defaults = UserDefaults.standard
@@ -22,10 +22,26 @@ class ViewController1: UITableViewController {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = false
         
+        // 最初のItem三つを設定
+        let newItem1 = Item()
+        newItem1.title = "本を読む"
+        newItem1.done = false
+        itemArray.append(newItem1)
+        
+        let newItem2 = Item()
+        newItem2.title = "映画を観る"
+        newItem2.done = false
+        itemArray.append(newItem2)
+        
+        let newItem3 = Item()
+        newItem3.title = "夕飯を買う"
+        newItem3.done = false
+        itemArray.append(newItem3)
+        
 //         UD内のデータをitemArrayに反映（UD内にデータがなかった場合にクラッシュしないように条件分岐で守る）
-        if let items = defaults.array(forKey: "items") as? [String] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "items") as? [String] {
+//            itemArray = items
+//        }
         
     }
     
@@ -48,8 +64,16 @@ class ViewController1: UITableViewController {
         
         // アラートシステムの中で青文字でボタンとして押せる部分の設定
         let action = UIAlertAction(title: "追加", style: .default) { (action) in
+            
+            // Itemクラスに基づいたオブジェクトの生成
+            let titleOfNew = textField.text!
+            let boolOfNew = false
+            let itemOfNew = Item()
+            itemOfNew.title = titleOfNew
+            itemOfNew.done = boolOfNew
+            
             // 「追加」ボタンを押した時の処理
-            self.itemArray.append(textField.text!)
+            self.itemArray.append(itemOfNew)
             
             // itemArrayをUserDefaultsに保存
             self.defaults.set(self.itemArray, forKey: "items")
@@ -84,7 +108,7 @@ class ViewController1: UITableViewController {
 //        // Reuseではないセルを構築 → 画面から消えると保持していた値が消える
 //        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
-        cell.textLabel?.text = itemArray[indexPath.row]
+        cell.textLabel?.text = itemArray[indexPath.row].title
 
         return cell
     }

@@ -77,15 +77,19 @@ class ViewController1: UITableViewController {
         return itemArray.count
     }
 
-    
+    // セルの構築 //
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+//        // Reuseではないセルを構築 → 画面から消えると保持していた値が消える
+//        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
         cell.textLabel?.text = itemArray[indexPath.row]
 
         return cell
     }
     
+    // セルの選択 //
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // タップしたセルを離した後に非選択に戻す

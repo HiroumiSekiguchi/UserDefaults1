@@ -38,6 +38,7 @@ class ViewController1: UITableViewController {
         newItem3.done = false
         itemArray.append(newItem3)
         
+        
 //         UD内のデータをitemArrayに反映（UD内にデータがなかった場合にクラッシュしないように条件分岐で守る）
 //        if let items = defaults.array(forKey: "items") as? [String] {
 //            itemArray = items
@@ -112,14 +113,21 @@ class ViewController1: UITableViewController {
 //        // Reuseではないセルを構築 → 画面から消えると保持していた値が消える
 //        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
-        cell.textLabel?.text = itemArray[indexPath.row].title
+        // 繰り返し使う記述を定数で宣言（リファクタリング用）
+        let item = itemArray[indexPath.row]
+        
+        cell.textLabel?.text = item.title
         
         // セルの持つ「Item」の「done」プロパティに応じてチェックマークを付け外し
-        if itemArray[indexPath.row].done == true {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
+//        if item.done == true {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
+        // Ternary Operatorで上の5行をリファクタリング
+        cell.accessoryType = item.done ? .checkmark : .none
+        // Ternary Operatorについて：
+        // value = condition ? valueIfTrue : valueIfFalse
 
         return cell
     }
@@ -131,11 +139,14 @@ class ViewController1: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // タップをされたセルのデータ（Item）の「done」プロパティを切り替える
-        if itemArray[indexPath.row].done == false {
-           itemArray[indexPath.row].done = true
-        } else {
-            itemArray[indexPath.row].done = false
-        }
+//        if itemArray[indexPath.row].done == false {
+//           itemArray[indexPath.row].done = true
+//        } else {
+//            itemArray[indexPath.row].done = false
+//        }
+        // 上の5行をリファクタリング
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
         
         // タップしたセルのチェックを付けたり外したりする
 //        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {

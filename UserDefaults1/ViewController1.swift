@@ -14,13 +14,19 @@ class ViewController1: UITableViewController {
     // セルに表示する項目を格納
     var itemArray = ["本を読む", "映画見る", "夕飯を買う"]
     
+    // UserDefaultsの初期化
+    let defaults = UserDefaults.standard
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         self.clearsSelectionOnViewWillAppear = false
+        
+        // UD内のデータをitemArrayに反映（UD内にデータがなかった場合にクラッシュしないように条件分岐で守る）
+        if let items = defaults.array(forKey: "items") as? [String] {
+            itemArray = items
+        }
+        
     }
     
     
@@ -44,6 +50,9 @@ class ViewController1: UITableViewController {
         let action = UIAlertAction(title: "追加", style: .default) { (action) in
             // 「追加」ボタンを押した時の処理
             self.itemArray.append(textField.text!)
+            
+            // itemArrayをUserDefaultsに保存
+            self.defaults.set(self.itemArray, forKey: "items")
             
             // TableViewのリロード
             self.tableView.reloadData()

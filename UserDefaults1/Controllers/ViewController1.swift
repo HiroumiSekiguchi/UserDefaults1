@@ -113,6 +113,13 @@ class ViewController1: UITableViewController {
 //        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         
         cell.textLabel?.text = itemArray[indexPath.row].title
+        
+        // セルの持つ「Item」の「done」プロパティに応じてチェックマークを付け外し
+        if itemArray[indexPath.row].done == true {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
 
         return cell
     }
@@ -123,12 +130,21 @@ class ViewController1: UITableViewController {
         // タップしたセルを離した後に非選択に戻す
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // タップしたセルのチェックを付けたり外したりする
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        // タップをされたセルのデータ（Item）の「done」プロパティを切り替える
+        if itemArray[indexPath.row].done == false {
+           itemArray[indexPath.row].done = true
         } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            itemArray[indexPath.row].done = false
         }
+        
+        // タップしたセルのチェックを付けたり外したりする
+//        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+//        } else {
+//            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//        }
+        
+        tableView.reloadData()
         
     }
 

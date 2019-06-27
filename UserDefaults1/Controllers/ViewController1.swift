@@ -66,11 +66,15 @@ class ViewController1: UITableViewController {
         let action = UIAlertAction(title: "追加", style: .default) { (action) in
             
             // Itemクラスに基づいたオブジェクトの生成
-            let titleOfNew = textField.text!
-            let boolOfNew = false
+//            let titleOfNew = textField.text!
+//            let boolOfNew = false
+//            let itemOfNew = Item()
+//            itemOfNew.title = titleOfNew
+//            itemOfNew.done = boolOfNew
+            // 上の５行のコード、間違ってはいないけど、もっとスマートに。
             let itemOfNew = Item()
-            itemOfNew.title = titleOfNew
-            itemOfNew.done = boolOfNew
+            itemOfNew.title = textField.text!
+            itemOfNew.done = false
             
             // 「追加」ボタンを押した時の処理
             self.itemArray.append(itemOfNew)
